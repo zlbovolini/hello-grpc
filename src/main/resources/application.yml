@@ -1,0 +1,24 @@
+micronaut:
+  application:
+    name: helloGrpc
+  server:
+    port: ${APP_PORT:8084}
+
+# docker run --name hello-postgres -p 5432:5432 -e POSTGRES_USER=zup -e POSTGRES_PASSWORD=zup -e POSTGRES_DB=hello -d postgres:13.4-alpine
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/hello
+    driverClassName: org.postgresql.Driver
+    username: zup
+    password: zup
+    schema-generate: CREATE_DROP
+    dialect: POSTGRES
+jpa.default.properties.hibernate.hbm2ddl.auto: update
+
+endpoints:
+  all:
+    sensitive: false # a maioria dos endpoints requer autenticacao
+  health:
+    enabled: true # padrao
+    sensitive: false # padrao
+    details-visible: ANONYMOUS # libera a visibilidade de detalhes para usuarios nao autenticados
